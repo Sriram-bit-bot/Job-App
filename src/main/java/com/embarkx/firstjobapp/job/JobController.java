@@ -1,6 +1,7 @@
 package com.embarkx.firstjobapp.job;
 
 import com.embarkx.firstjobapp.job.impl.JobServiceImpl;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -39,4 +40,21 @@ public class JobController {
         return new ResponseEntity<>(job, HttpStatus.OK);
     }
 
+    @DeleteMapping("/jobs/{id}")
+    public ResponseEntity<String> deleteJobById(@PathVariable Long id){
+        Boolean isSuccess =jobService.deleteJobById(id);
+        if(!isSuccess){
+            return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("Job Deleted", HttpStatus.OK);
+    }
+
+    @PutMapping("/jobs/{id}")
+    public ResponseEntity<String> updateJobById(@PathVariable Long id,@RequestBody Job job){
+        Boolean isCreated =jobService.updateJobById(id, job);
+        if(isCreated){
+            return new ResponseEntity<>("Job Created",HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Job updated", HttpStatus.OK);
+    }
 }
