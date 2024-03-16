@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping(name ="/jobs")
 // Request Mapping annotation at class level will add this path(/jobs) to all handler methods
+@RestController
+@RequestMapping("/jobs")
 public class JobController {
     private JobService jobService;
     // Here, we are not initializing the jobService object, spring will inject the object here,
@@ -20,14 +20,14 @@ public class JobController {
     public JobController(JobService jobService) {
         this.jobService = jobService;
     }
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Job>> findAll(){
         List<Job> jobs = jobService.findAll();
 //       return new ResponseEntity<>(new ArrayList<>(jobs),HttpStatus.OK);
         return ResponseEntity.ok(jobs);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<String> createJob(@RequestBody Job job){
         jobService.createJob(job);
         return new ResponseEntity<>("Job added successfully", HttpStatus.CREATED);
@@ -52,7 +52,8 @@ public class JobController {
     }
 
 //    @PutMapping("/jobs/{id}")
-    @RequestMapping(value ="{id}", method = RequestMethod.PUT)
+    @RequestMapping(value ="/{id}", method = RequestMethod.PUT)
+    // Request Mapping at handler level can be used like this
     public ResponseEntity<String> updateJobById(@PathVariable Long id,@RequestBody Job job){
         Boolean isCreated =jobService.updateJobById(id, job);
         if(isCreated){
