@@ -1,6 +1,7 @@
 package com.embarkx.firstjobapp.company;
 
 import com.embarkx.firstjobapp.job.Job;
+import com.embarkx.firstjobapp.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -15,8 +16,9 @@ public class Company {
     @JsonIgnore // Try adding this JSON ignore to Job entity, company column
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;
-//    @OneToMany
-//    private List<Review> reviews;
+    @JsonIgnore
+    @OneToMany(mappedBy = "company")
+    private List<Review> reviews;
     public Company() {
     }
 
