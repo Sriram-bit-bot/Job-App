@@ -1,5 +1,7 @@
 package com.embarkx.firstjobapp.job;
 
+import com.embarkx.firstjobapp.company.Company;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,16 @@ public class Job {
     private String minSalary;
     private String maxSalary;
     private String location;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+    @ManyToOne
+    private Company company;
 
     public Job(Long id, String title, String description, String minSalary, String maxSalary, String location) {
         this.id = id;
